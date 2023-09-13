@@ -33,7 +33,7 @@ $Apps | ForEach-Object {
             }
         }
 
-        # List API permissions or Scopes for app, then resolve each permission name within each scope
+        # List API permissions (scopes and roles) for app, then resolve each permission name within each scope/role
         $appPermissions=""
         #$App.RequiredResourceAccess | Format-List
         $App.RequiredResourceAccess | ForEach-Object{
@@ -52,9 +52,9 @@ $Apps | ForEach-Object {
             $appPermissions += "`n"
             #$requiredSP
         }
-        # Get the Service Principal (SP) for the application. Roles are assigned to SP
+        # Get the Service Principal (SP) for the application. Azure Roles are assigned to SP
         $AppSPid = ($allSPs | Where-Object -FilterScript {$_.AppId -EQ $App.AppId}).Id
-        # List all roles for app SP
+        # Get all Azure built in roles where the app is assigned to
         $appRolesAssigned=""
         $appRoles = $allRoleAssignments | Where-Object -FilterScript {$_.ObjectId -EQ $AppSPid}
         $appRoles | ForEach-Object {
@@ -67,7 +67,7 @@ $Apps | ForEach-Object {
             AppId = $app.AppId;
             AppCredentials = $appCredentials;
             APIPermissions = $appPermissions;
-            AppRolesAssigned = $appRolesAssigned;
+            AzureRolesWithResources = $appRolesAssigned;
             }
     }
 }
