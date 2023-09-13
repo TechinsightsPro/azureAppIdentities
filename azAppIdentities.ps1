@@ -3,7 +3,7 @@
 # requires module Az:
 # Install-Module Az
 
-#Connect-AzAccount
+Connect-AzAccount
 $today = Get-Date
 
 # Get all app registrations having key or password credentials. These are created to run automated tasks as apps and 
